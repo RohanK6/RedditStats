@@ -1,3 +1,4 @@
+import functools
 import praw
 import os
 

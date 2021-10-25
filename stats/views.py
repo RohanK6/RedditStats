@@ -1,5 +1,4 @@
 from django.shortcuts import render
-from django.http import HttpResponse
 from . import reddit
 
 # Create your views here.
@@ -7,4 +6,16 @@ from . import reddit
 reddit = reddit.Reddit()
 
 def index(request):
-    return HttpResponse('<h1> Hello </h1>')
+    return render(request, 'stats/index.html')
+
+def register(request):
+    return render(request, 'stats/register.html')
+
+def login(request):
+    return render(request, 'stats/login.html')
+
+def logout(request):
+    return render(request, 'stats/logout.html')
+
+def dashboard(request):
+    return render(request, 'stats/dashboard.html')
