@@ -72,5 +72,5 @@ def account_logout(request):
 
 @login_required
 def dashboard(request):
-    print(request.user.reddit_username)
-    return render(request, 'stats/dashboard.html')
+    context = reddit.user_overview(request.user.reddit_username)
+    return render(request, 'stats/dashboard.html', context)
