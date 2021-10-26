@@ -1,10 +1,10 @@
 from django.shortcuts import render, redirect
-from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth.models import User
-from django.contrib import messages
-from .forms import ProfileForm
+from .forms import AccountForm
+from stats.models import Account
 from . import reddit
+from django.contrib import messages
 
 # Create your views here.
 
@@ -15,17 +15,26 @@ def index(request):
 
 def register(request):
     if request.method == 'POST':
-        form = ProfileForm(request.POST)
+        form = AccountForm(request.POST)
 
         if form.is_valid():
             form.save()
-            username = form.cleaned_data['username']
+            
+            email = form.cleaned_data['email']
+            reddit_username = form.cleaned_data['reddit_username']
+            unhashed_password = form.cleaned_data['password1']
 
-            messages.success(request, f'Account created for {username}!')
+            account = authenticate(email=email, password=unhashed_password)
+
+            messages.success(request, f'Account created for {email}')
+
             return redirect('login')
+            
+        else:
+            context = {'form': form}
 
     else:
-        form = ProfileForm()
+        form = AccountForm()
         context = {'form': form}
 
     return render(request, 'stats/register.html', context)
@@ -39,4 +48,5 @@ def logout(request):
 
 @login_required
 def dashboard(request):
+    print(request.user.reddit_username)
     return render(request, 'stats/dashboard.html')
