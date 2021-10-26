@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
-from .forms import AccountForm
+from .forms import AccountForm, AccountAuthenticationForm
 from stats.models import Account
 from . import reddit
 from django.contrib import messages
@@ -39,12 +39,36 @@ def register(request):
 
     return render(request, 'stats/register.html', context)
 
-def login(request):
-    return render(request, 'stats/login.html')
+def account_login(request):
+    context = {}
+
+    user = request.user
+    
+    if user.is_authenticated:
+        return redirect('index')
+    
+    if request.method == 'POST':
+        form = AccountAuthenticationForm(request.POST)
+        if form.is_valid():
+            email = request.POST['email']
+            password = request.POST['password']
+            user = authenticate(email=email, password=password)
+
+            if user:
+                login(request, user)
+                return redirect('index')
+    else:
+        form = AccountAuthenticationForm()
+
+    context['form'] = form
+
+    return render(request, 'stats/login.html', context)
 
 @login_required
-def logout(request):
-    return render(request, 'stats/logout.html')
+def account_logout(request):
+    logout(request)
+    messages.success(request, 'Successfully logged out!')
+    return redirect('index')
 
 @login_required
 def dashboard(request):
