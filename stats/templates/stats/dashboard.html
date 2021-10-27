@@ -1,19 +1,68 @@
 {% extends 'stats/base.html' %}
 
-{% block content %}
-<h1> u/{{ name}} </h1>
-<h3> Total Karma: {{ total_karma }} </h3>
-<h3> Comment Karma: {{ comment_karma }} </h3>
-<h3> Link Karma: {{ link_karma }} </h3>
+{% block title %}
+    <title> Dashboard </title>
+{% endblock %}
 
-<h5> Created at: {{ created_utc }} </h5>
+{% block content %}
+<h1 id="rrr"> u/{{ name}} </h1>
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-3">
+            <div class="card card-sm text-center">
+                <div class="card-header bg-primary text-white text-lg">
+                    <div class="row">
+                        <div class="col">
+                            <h3> Total Karma: {{ total_karma }} </h3>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card text-center">
+                <div class="card-header bg-primary text-white text-lg">
+                    <div class="row">
+                        <div class="col">
+                            <h3> Comment Karma: {{ comment_karma }} </h3>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card text-center">
+                <div class="card-header bg-primary text-white text-lg">
+                    <div class="row">
+                        <div class="col">
+                            <h3> Link Karma: {{ link_karma }} </h3>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card text-center">
+                <div class="card-header bg-primary text-white text-lg">
+                    <div class="row">
+                        <div class="col">
+                            <h3> Created at: {{ created_time }} </h3>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 <h5> Icon: {{ icon_img }} </h5>
 
 <div class="container">
     <div class="row">
-        <div class="col-xs-6">
+        <div class="col-sm">
             <h5> Top 10 Recent Comments </h5>
-            <table>
+            <table class="table table-hover text-center">
                 <tr>
                     <th> Comment </th>
                     <th> Subreddit </th>
@@ -21,24 +70,60 @@
                 </tr>
                 {% for comment in new_comments %}
                     <tr>
-                    <td> {{ comment.body }} </td>
+                        <td> {{ comment.body }} </td>
                         <td> {{ comment.subreddit }} </td>
                         <td> {{ comment.score }} </td>
                     </tr>
                 {% endfor %}
             </table>
         </div>
-        <div class="col-xs-6">
-            <h5> Top 10 Recent Posts </h5>
-            <table>
+        <div class="col-sm">
+            <h5> Top 10 Top Comments </h5>
+            <table class="table table-hover text-center">
                 <tr>
-                    <th> Post </th>
+                    <th> Comment </th>
+                    <th> Subreddit </th>
+                    <th> Score </th>
+                </tr>
+                {% for comment in top_comments %}
+                    <tr>
+                        <td> {{ comment.body }} </td>
+                        <td> {{ comment.subreddit }} </td>
+                        <td> {{ comment.score }} </td>
+                    </tr>
+                {% endfor %}
+            </table>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm">
+            <h5> Top 10 Recent Submissions </h5>
+            <table class="table table-hover text-center">
+                <tr>
+                    <th> Submission </th>
                     <th> Subreddit </th>
                     <th> Score </th>
                 </tr>
                 {% for submission in new_submissions %}
                     <tr>
-                    <td> {{ submission.title }} </td>
+                        <td> {{ submission.title }} </td>
+                        <td> {{ submission.subreddit }} </td>
+                        <td> {{ submission.score }} </td>
+                    </tr>
+                {% endfor %}
+            </table>
+        </div>
+        <div class="col-sm">
+            <h5> Top 10 Top Submissions </h5>
+            <table class="table table-hover text-center">
+                <tr>
+                    <th> Submission </th>
+                    <th> Subreddit </th>
+                    <th> Score </th>
+                </tr>
+                {% for submission in top_submissions %}
+                    <tr>
+                        <td> {{ submission.title }} </td>
                         <td> {{ submission.subreddit }} </td>
                         <td> {{ submission.score }} </td>
                     </tr>
@@ -48,44 +133,8 @@
     </div>
 </div>
 
-
-
-
-
-<h5> Top 10 Top Comments </h5>
-<table>
-    <tr>
-        <th> Comment </th>
-        <th> Subreddit </th>
-        <th> Score </th>
-    </tr>
-    {% for comment in top_comments %}
-        <tr>
-           <td> {{ comment.body }} </td>
-            <td> {{ comment.subreddit }} </td>
-            <td> {{ comment.score }} </td>
-        </tr>
-    {% endfor %}
-</table>
-
-<h5> Top 10 Top Posts </h5>
-<table>
-    <tr>
-        <th> Post </th>
-        <th> Subreddit </th>
-        <th> Score </th>
-    </tr>
-    {% for submission in top_submissions %}
-        <tr>
-           <td> {{ submission.title }} </td>
-            <td> {{ submission.subreddit }} </td>
-            <td> {{ submission.score }} </td>
-        </tr>
-    {% endfor %}
-</table>
-
 <h5> Gilded </h5>
-<table>
+<table class="table table-hover text-center table-warning">
     <tr>
         <th> Post </th>
         <th> Subreddit </th>
