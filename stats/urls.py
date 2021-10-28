@@ -16,4 +16,6 @@ urlpatterns = [
     
     path('ssearch/', views.ssearch, name='ssearch'),
     path('ssearch/<str:query>/', views.ssearch_query, name='ssearch_query'),
+
+    path('leaderboard/', views.leaderboard, name='leaderboard'),
 ]

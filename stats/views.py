@@ -107,3 +107,16 @@ def ssearch_query(request, query):
         return redirect('ssearch')
         
     return render(request, 'stats/ssearch_query.html', context)
+
+def leaderboard(request):
+    popularSubreddits = reddit.popular_subreddits()
+
+    counter = 1
+
+    context = {}
+
+    for subreddit in popularSubreddits:
+        context[counter] = subreddit
+        counter += 1
+
+    return render(request, 'stats/leaderboard.html', {'context': context})

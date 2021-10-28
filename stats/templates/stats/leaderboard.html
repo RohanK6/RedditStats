@@ -1,0 +1,31 @@
+{% extends 'stats/base.html' %}
+
+{% block title %}
+    <title> Leaderboard </title>
+{% endblock %}
+
+{% block content %}
+
+<div class="container">
+    <div class="row">
+        <div class="col-sm">
+            <h5> Popular Subreddits </h5>
+            <table class="table table-hover text-center">
+                <tr>
+                    <th> Rank </th>
+                    <th> Subreddit </th>
+                    <th> Subscribers </th>
+                </tr>
+                {% for rank, subreddit in context.items %}
+                    <tr>
+                        <td> {{ rank }} </td>
+                        <td> {{ subreddit.display_name }} </td>
+                        <td> {{ subreddit.subscribers }} </td>
+                    </tr>
+                {% endfor %}
+            </table>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

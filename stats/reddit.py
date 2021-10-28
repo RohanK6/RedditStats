@@ -87,3 +87,7 @@ class Reddit:
     
     def validate_subreddit(self, subreddit):
         return self.praw.subreddit(subreddit).id
+    
+    @lru_cache()
+    def popular_subreddits(self):
+        return list(self.praw.subreddits.popular())
