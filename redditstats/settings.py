@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 
 from pathlib import Path
 from dotenv import load_dotenv
+from django.contrib.messages import constants as messages
 import os
 
 load_dotenv()
@@ -107,6 +108,10 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+
+MESSAGE_TAGS = {
+    messages.ERROR: 'danger',
+}
 
 # Internationalization
 # https://docs.djangoproject.com/en/3.2/topics/i18n/

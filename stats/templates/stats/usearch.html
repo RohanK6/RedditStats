@@ -1,0 +1,10 @@
+{% extends 'stats/base.html' %}
+
+{% block content %}
+
+<form method="GET" action="{% url 'usearch' %}">
+    <input type="search" name="redditor">
+    <button type="submit"> Search </button>
+</form>
+
+{% endblock %}

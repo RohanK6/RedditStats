@@ -75,3 +75,19 @@ def account_logout(request):
 def dashboard(request):
     context = reddit.user_overview(request.user.reddit_username)
     return render(request, 'stats/dashboard.html', context)
+
+def usearch(request):
+    if request.GET.get('redditor') != None:
+        query = request.GET.get('redditor')
+        return redirect('usearch_query', query)
+
+    return render(request, 'stats/usearch.html')
+
+def usearch_query(request, query):
+    context = reddit.user_overview(query)
+
+    if context == None:
+        messages.error(request, f'{query} is not a valid Reddit user. Please check and try again.')
+        return redirect('usearch')
+        
+    return render(request, 'stats/usearch_query.html', context)

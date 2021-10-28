@@ -4,6 +4,7 @@ import os
 
 from dotenv import load_dotenv
 from functools import lru_cache
+from prawcore.exceptions import NotFound
 import datetime
 
 load_dotenv()
@@ -22,6 +23,12 @@ class Reddit:
 
     @lru_cache(maxsize=None)
     def user_overview(self, redditor):
+
+        try:
+            self.validate_redditor(redditor)
+        except NotFound:
+            return None
+
         redditor = self.praw.redditor(redditor)
 
         overview = {
@@ -43,3 +50,6 @@ class Reddit:
         overview['created_time'] = formatted_time
 
         return overview
+    
+    def validate_redditor(self, redditor):
+        return self.praw.redditor(redditor).id
