@@ -1,0 +1,106 @@
+{% extends 'stats/base.html' %}
+
+{% block title %}
+    <title> r/{{ name }} </title>
+{% endblock %}
+
+{% block content %}
+<h1> r/{{ name }} </h1>
+<h4> {{ description }} </h4>
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-4">
+            <div class="card card-sm text-center">
+                <div class="card-header bg-primary text-white text-lg">
+                    <div class="row">
+                        <div class="col">
+                            <h3> Subscribers: {{subscribers }} </h3>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card text-center">
+                <div class="card-header bg-primary text-white text-lg">
+                    <div class="row">
+                        <div class="col">
+                            <h3> NSFW {{ over18 }} </h3>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card text-center">
+                <div class="card-header bg-primary text-white text-lg">
+                    <div class="row">
+                        <div class="col">
+                            <h3> Created at: {{ created_time }} </h3>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<img src="{{banner}}">
+<div class="container">
+    <div class="row">
+        <div class="col-md-4">
+            <h5> Top 10 Hot Posts </h5>
+            <table class="table table-hover text-center">
+                <tr>
+                    <th> Posts </th>
+                    <th> Subreddit </th>
+                    <th> Score </th>
+                </tr>
+                {% for post in hot %}
+                    <tr>
+                        <td> {{ post.title }} </td>
+                        <td> {{ post.subreddit }} </td>
+                        <td> {{ post.score }} </td>
+                    </tr>
+                {% endfor %}
+            </table>
+        </div>
+        <div class="col-md-4">
+            <h5> Top 10 New Posts </h5>
+            <table class="table table-hover text-center">
+                <tr>
+                    <th> Posts </th>
+                    <th> Subreddit </th>
+                    <th> Score </th>
+                </tr>
+                {% for post in new %}
+                    <tr>
+                        <td> {{ post.title }} </td>
+                        <td> {{ post.subreddit }} </td>
+                        <td> {{ post.score }} </td>
+                    </tr>
+                {% endfor %}
+            </table>
+        </div>
+        <div class="col-md-4">
+            <h5> Top 10 Top Posts </h5>
+            <table class="table table-hover text-center">
+                <tr>
+                    <th> Posts </th>
+                    <th> Subreddit </th>
+                    <th> Score </th>
+                </tr>
+                {% for post in top %}
+                    <tr>
+                        <td> {{ post.title }} </td>
+                        <td> {{ post.subreddit }} </td>
+                        <td> {{ post.score }} </td>
+                    </tr>
+                {% endfor %}
+            </table>
+        </div>
+    </div>
+</div>
+
+
+{% endblock %}

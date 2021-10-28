@@ -1,6 +1,7 @@
 import functools
 import praw
 import os
+import logging
 
 from dotenv import load_dotenv
 from functools import lru_cache
@@ -53,3 +54,36 @@ class Reddit:
     
     def validate_redditor(self, redditor):
         return self.praw.redditor(redditor).id
+    
+    def subreddit_overview(self, subreddit):
+
+        try:
+            self.validate_subreddit(subreddit)
+        except Exception:
+            return None
+
+
+        subreddit = self.praw.subreddit(subreddit)
+
+        overview = {
+            'name': subreddit.display_name,
+            'description': subreddit.public_description,
+            'subscribers': subreddit.subscribers,
+            'over18': subreddit.over18,
+            'created_time': subreddit.created_utc,
+            'hot': list(subreddit.hot(limit=10)),
+            'new': list(subreddit.new(limit=10)),
+            'top': list(subreddit.top(limit=10)),
+            'icon': subreddit.icon_img,
+            'banner': subreddit.banner_img,
+            'header': subreddit.header_img,
+        }
+
+        converted_time = datetime.datetime.fromtimestamp(overview['created_time'])
+        formatted_time = converted_time.strftime('%B %d, %Y')
+        overview['created_time'] = formatted_time
+
+        return overview
+    
+    def validate_subreddit(self, subreddit):
+        return self.praw.subreddit(subreddit).id

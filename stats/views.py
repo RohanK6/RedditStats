@@ -2,10 +2,10 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.core.cache import cache
-from .forms import AccountForm, AccountAuthenticationForm
-from stats.models import Account
-from . import reddit
 from django.contrib import messages
+from .forms import AccountForm, AccountAuthenticationForm
+from .models import Account
+from . import reddit
 
 # Create your views here.
 
@@ -91,3 +91,19 @@ def usearch_query(request, query):
         return redirect('usearch')
         
     return render(request, 'stats/usearch_query.html', context)
+
+def ssearch(request):
+    if request.GET.get('subreddit') != None:
+        query = request.GET.get('subreddit')
+        return redirect('ssearch_query', query)
+
+    return render(request, 'stats/ssearch.html')
+
+def ssearch_query(request, query):
+    context = reddit.subreddit_overview(query)
+
+    if context == None:
+        messages.error(request, f'{query} is not a valid subreddit. Please check and try again.')
+        return redirect('ssearch')
+        
+    return render(request, 'stats/ssearch_query.html', context)

@@ -1,13 +1,13 @@
 {% extends 'stats/base.html' %}
 
 {% block title %}
-    <title> User Search </title>
+    <title> Subreddit Search </title>
 {% endblock %}
 
 {% block content %}
 
-<form method="GET" action="{% url 'usearch' %}">
-    <input type="search" name="redditor">
+<form method="GET" action="{% url 'ssearch' %}">
+    <input type="search" name="subreddit">
     <button type="submit"> Search </button>
 </form>
 
