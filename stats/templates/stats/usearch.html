@@ -6,9 +6,24 @@
 
 {% block content %}
 
-<form method="GET" action="{% url 'usearch' %}">
-    <input type="search" name="redditor">
-    <button type="submit"> Search </button>
-</form>
+<div class="parent">
+    <div class="search-container">
+        <div class="typewriter-container">
+            <div class="typewriter" id="typewriter">
+                <h1 class="cursor"> </h1>
+            </div>
+ 
+            <form class="search-form" method="GET" action="{% url 'usearch' %}">
+                <input class="search-input" type="search" name="redditor">
+                <button class="search-button" type="submit"> Search </button>
+                <!-- <i class="fa fa-search"></i> -->
+            </form>
+        </div>
+    </div>
+</div>
+
+
+{% load static %}
+<script src="{% static 'stats/user_typewriter.js' %}"></script>
 
 {% endblock %}

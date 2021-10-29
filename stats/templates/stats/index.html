@@ -1,13 +1,13 @@
 {% extends 'stats/base.html' %}
     
 {% block content %}
-    <div class="container">
+    <div class="container index-container">
         <div class="row ">
             <div class="col-sm text-center">
 
             </div>
             <div class="col-sm text-center">
-                <h2> RedditStats </h2>
+                <h2 class="index-header"> RedditStats </h2>
             </div>
             <div class="col-sm text-center">
 
@@ -19,12 +19,12 @@
 
             </div>
             <div class="col-sm text-center">
-                <a href="#">
-                    <button type="button"> Users </button>
+                <a class="index-href" href="{% url 'usearch' %}">
+                    <button class="index-buttons" type="button"> Users </button>
                 </a>
 
-                <a href="#">
-                    <button type="button"> Subreddits </button>
+                <a class="index-href" href="{% url 'ssearch' %}">
+                    <button class="index-buttons" type="button"> Subreddits </button>
                 </a>
             </div>
             <div class="col-sm text-center">
